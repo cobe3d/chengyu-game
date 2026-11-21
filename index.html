@@ -1,0 +1,1494 @@
+<!doctype html>
+<html lang="zh-Hant">
+<title>成語填字書院</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* 版面：木色書院橫匾在上，宣紙桌面在下；遊戲時左邊田字格＋字盤、右邊成語卡兩欄並排（電腦為主），窄螢幕疊成一欄 */
+:root {
+  --paper: #F5F0E4;
+  --paper-2: #EBE2CD;
+  --dot: #DDD2BC;
+  --surface: #FFFDF7;
+  --ink: #2B2622;
+  --ink-2: #675D53;
+  --ink-3: #998D80;
+  --line: #DCCDB3;
+  --celadon: #3E7A6A;
+  --celadon-2: #DCEBE4;
+  --celadon-ink: #2A5A4D;
+  --on-celadon: #FFFFFF;
+  --wood: #8C6239;
+  --wood-2: #D9C3A6;
+  --wood-3: #5C3D1E;
+  --bar: #7A5432;
+  --bar-edge: #553719;
+  --bar-ink: #F7F1E3;
+  --bar-ink-2: #E3CFAE;
+  --bar-btn: rgba(255, 248, 232, .12);
+  --bar-btn-on: rgba(255, 248, 232, .26);
+  --gold: #D08A14;
+  --gold-2: #FBEFD5;
+  --cinnabar: #C4433B;
+  --cinnabar-2: #F8E0DC;
+  --tile-top: #FFFDF8;
+  --tile-bot: #EFE2C8;
+  --tile-edge: #B89166;
+  --tile-shadow: #9A744B;
+  --guide: rgba(140, 98, 57, .17);
+  --shadow: 0 1px 2px rgba(70, 45, 20, .07), 0 8px 22px rgba(70, 45, 20, .08);
+  --backdrop: rgba(32, 22, 12, .55);
+
+  --font-kai: "LXGW WenKai TC", "BiauKai", "DFKai-SB", "標楷體", "Kaiti TC", serif;
+  --font-sans: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", system-ui, sans-serif;
+  --cell: 52px;
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #1A1E1C; --paper-2: #232826; --dot: #2A302D; --surface: #252A27;
+    --ink: #ECE5D4; --ink-2: #B7AE9F; --ink-3: #887F73; --line: #3A403C;
+    --celadon: #7DB5A5; --celadon-2: #233F38; --celadon-ink: #A8D6C7; --on-celadon: #10221D;
+    --wood: #C49A6C; --wood-2: #4A3E31; --wood-3: #E4CBA8;
+    --bar: #2C2520; --bar-edge: #1A1512; --bar-ink: #EFE6D4; --bar-ink-2: #BFA785;
+    --bar-btn: rgba(255, 240, 215, .08); --bar-btn-on: rgba(255, 240, 215, .2);
+    --gold: #EDB24A; --gold-2: #3A3020; --cinnabar: #E2756D; --cinnabar-2: #452826;
+    --tile-top: #3B342C; --tile-bot: #2F2923; --tile-edge: #6E5942; --tile-shadow: #15110D;
+    --guide: rgba(228, 203, 168, .12);
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 22px rgba(0, 0, 0, .28);
+    --backdrop: rgba(0, 0, 0, .62);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #1A1E1C; --paper-2: #232826; --dot: #2A302D; --surface: #252A27;
+  --ink: #ECE5D4; --ink-2: #B7AE9F; --ink-3: #887F73; --line: #3A403C;
+  --celadon: #7DB5A5; --celadon-2: #233F38; --celadon-ink: #A8D6C7; --on-celadon: #10221D;
+  --wood: #C49A6C; --wood-2: #4A3E31; --wood-3: #E4CBA8;
+  --bar: #2C2520; --bar-edge: #1A1512; --bar-ink: #EFE6D4; --bar-ink-2: #BFA785;
+  --bar-btn: rgba(255, 240, 215, .08); --bar-btn-on: rgba(255, 240, 215, .2);
+  --gold: #EDB24A; --gold-2: #3A3020; --cinnabar: #E2756D; --cinnabar-2: #452826;
+  --tile-top: #3B342C; --tile-bot: #2F2923; --tile-edge: #6E5942; --tile-shadow: #15110D;
+  --guide: rgba(228, 203, 168, .12);
+  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 22px rgba(0, 0, 0, .28);
+  --backdrop: rgba(0, 0, 0, .62);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { min-height: 100%; }
+body {
+  background-color: var(--paper);
+  background-image: radial-gradient(var(--dot) 1px, transparent 1px);
+  background-size: 20px 20px;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-tap-highlight-color: transparent;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 40; background: var(--bar);
+}
+button { font: inherit; color: inherit; cursor: pointer; }
+button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.wrap {
+  max-width: 1220px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.kai { font-family: var(--font-kai); }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+p { margin: 0; }
+
+/* ---------- 頂部橫匾 ---------- */
+.topbar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30;
+  background: var(--bar); color: var(--bar-ink);
+  border-bottom: 3px solid var(--bar-edge);
+}
+.topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 10px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 12px; background: none; border: 0; padding: 0; text-align: left; }
+.seal {
+  width: 44px; height: 44px; flex: none; border-radius: 6px;
+  background: var(--cinnabar); color: #FFF6EE;
+  display: grid; place-items: center;
+  font-family: var(--font-kai); font-weight: 700; font-size: 26px; line-height: 1;
+  box-shadow: inset 0 0 0 2px rgba(255, 240, 230, .55), inset 0 0 0 4px var(--cinnabar);
+}
+.brand h1 { font-family: var(--font-kai); font-weight: 700; font-size: 22px; letter-spacing: .08em; line-height: 1.2; }
+.brand small { display: block; font-size: 12px; color: var(--bar-ink-2); letter-spacing: .04em; }
+.bar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.bar-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 12px; border-radius: 10px;
+  background: var(--bar-btn); border: 1px solid rgba(255, 240, 220, .22); color: var(--bar-ink);
+  font-size: 14px; font-weight: 500;
+}
+.bar-btn:hover { background: var(--bar-btn-on); }
+.bar-btn[aria-pressed="false"] { opacity: .7; }
+.bar-btn .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--celadon-2); }
+.bar-btn[aria-pressed="true"] .dot { background: #8FD3BE; }
+.bar-btn[aria-pressed="false"] .dot { background: transparent; border: 1.5px solid var(--bar-ink-2); }
+.bar-btn.strong { background: var(--gold); color: #3A2508; border-color: transparent; font-weight: 700; }
+.bar-btn.strong:hover { filter: brightness(1.06); }
+
+/* ---------- 共用元件 ---------- */
+.panel { background: var(--surface); border: 1.5px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 9px 16px; border-radius: 11px; font-weight: 700; font-size: 14px;
+  border: 1.5px solid var(--line); background: var(--surface); color: var(--ink);
+  transition: transform .08s ease, box-shadow .08s ease, background .15s;
+}
+.btn:hover { background: var(--paper-2); }
+.btn-primary { background: var(--celadon); color: var(--on-celadon); border-color: transparent; box-shadow: 0 3px 0 var(--celadon-ink); }
+.btn-primary:hover { background: var(--celadon); filter: brightness(1.06); }
+.btn-primary:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--celadon-ink); }
+.btn-wood { background: var(--wood); color: #FFF8EC; border-color: transparent; box-shadow: 0 3px 0 var(--wood-3); }
+.btn-wood:hover { background: var(--wood); filter: brightness(1.06); }
+.btn-wood:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--wood-3); }
+.btn-small { padding: 5px 10px; font-size: 13px; border-radius: 9px; }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.link-btn { background: none; border: 0; padding: 2px 4px; color: var(--ink-3); font-size: 13px; text-decoration: underline; text-underline-offset: 3px; }
+.link-btn:hover { color: var(--cinnabar); }
+.link-btn.armed { color: var(--cinnabar); font-weight: 700; }
+.tag { display: inline-block; padding: 1px 9px; border-radius: 6px; font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+.tag-celadon { background: var(--celadon); color: var(--on-celadon); }
+.tag-wood { background: var(--wood); color: #FFF8EC; }
+.tag-gold { background: var(--gold-2); color: var(--wood-3); border: 1px solid var(--gold); }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .12em; color: var(--celadon-ink); }
+.stars { letter-spacing: 2px; white-space: nowrap; }
+.stars .on { color: var(--gold); }
+.stars .off { color: var(--line); }
+.num { font-variant-numeric: tabular-nums; }
+
+/* ---------- 選關大廳 ---------- */
+#screen-lobby { padding-block: 28px 56px; display: flex; flex-direction: column; gap: 28px; }
+.hero { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 24px 28px; flex-wrap: wrap; }
+.hero-text { flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.hero h2 { font-family: var(--font-kai); font-size: 32px; font-weight: 700; color: var(--wood-3); letter-spacing: .04em; }
+.hero p { color: var(--ink-2); max-width: 60ch; }
+.hero-stats { display: flex; gap: 12px; flex-wrap: wrap; }
+.stat { background: var(--paper); border: 1.5px solid var(--line); border-radius: 14px; padding: 10px 18px; min-width: 130px; }
+.stat .label { font-size: 12px; color: var(--ink-3); font-weight: 700; letter-spacing: .06em; }
+.stat .value { font-size: 26px; font-weight: 700; line-height: 1.2; color: var(--wood-3); }
+.stat .value .gold { color: var(--gold); }
+.section-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+.section-head h3 { font-family: var(--font-kai); font-size: 22px; color: var(--wood-3); letter-spacing: .04em; }
+.section-head .hint { font-size: 13px; color: var(--ink-3); }
+.level-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 1060px) { .level-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 780px) { .level-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .level-grid { grid-template-columns: minmax(0, 1fr); } }
+.level-card {
+  text-align: left; display: flex; flex-direction: column; gap: 10px;
+  padding: 18px; border-radius: 18px; background: var(--surface);
+  border: 1.5px solid var(--line); box-shadow: var(--shadow);
+  transition: transform .15s ease, border-color .15s;
+}
+.level-card:hover { transform: translateY(-3px); border-color: var(--wood); }
+.level-card.cleared { border-color: var(--celadon); }
+.level-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.level-seal {
+  font-family: var(--font-kai); font-weight: 700; font-size: 15px; color: var(--cinnabar);
+  border: 1.5px solid var(--cinnabar); border-radius: 5px; padding: 0 7px; letter-spacing: .1em;
+}
+.level-card.cleared .level-seal { background: var(--cinnabar); color: #FFF6EE; }
+.level-grade { font-size: 12px; font-weight: 700; color: var(--celadon-ink); background: var(--celadon-2); padding: 1px 8px; border-radius: 6px; }
+.level-card h4 { margin: 0; font-family: var(--font-kai); font-size: 24px; color: var(--wood-3); letter-spacing: .06em; }
+.level-card .desc { font-size: 13px; color: var(--ink-2); min-height: 2.6em; }
+.level-foot { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line); display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--ink-3); gap: 8px; }
+.level-card.custom { background: var(--gold-2); border-color: var(--gold); }
+.level-card.custom .desc { font-family: var(--font-kai); font-size: 15px; color: var(--ink); }
+
+/* ---------- 遊戲畫面 ---------- */
+#screen-game { padding-block: 18px 40px; display: flex; flex-direction: column; gap: 16px; }
+.status { display: flex; justify-content: space-between; align-items: center; gap: 12px 20px; padding: 12px 18px; flex-wrap: wrap; }
+.status-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.badge { padding: 3px 10px; border-radius: 9px; background: var(--celadon); color: var(--on-celadon); font-weight: 700; font-size: 13px; white-space: nowrap; }
+.badge.custom { background: var(--gold); color: #3A2508; }
+.status-title { font-family: var(--font-kai); font-size: 22px; font-weight: 700; color: var(--wood-3); line-height: 1.2; }
+.status-sub { font-size: 13px; color: var(--ink-3); }
+.status-mid { display: flex; gap: 10px; align-items: center; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 10px; background: var(--paper); border: 1px solid var(--line); font-weight: 700; }
+.hearts { font-size: 18px; letter-spacing: 3px; line-height: 1; }
+.hearts .on { color: var(--cinnabar); }
+.hearts .off { color: var(--line); }
+.hearts.hit { animation: shake .4s ease-in-out; }
+.status-right { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+.game-cols { display: grid; grid-template-columns: minmax(0, 7fr) minmax(330px, 5fr); gap: 18px; align-items: start; }
+@media (max-width: 920px) { .game-cols { grid-template-columns: minmax(0, 1fr); } }
+.col { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.board { padding: 18px; display: flex; flex-direction: column; gap: 12px; align-items: stretch; }
+.board-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 13px; }
+.dir-indicator { font-weight: 700; color: var(--celadon-ink); background: var(--celadon-2); padding: 4px 10px; border-radius: 8px; }
+.board-tip { color: var(--ink-3); }
+.grid-scroll { overflow-x: auto; display: flex; justify-content: center; padding: 6px 0; }
+.cw-grid {
+  display: grid; gap: 5px; padding: 12px;
+  background: var(--paper); border: 1.5px solid var(--line); border-radius: 16px;
+}
+.cell {
+  width: var(--cell); height: var(--cell); padding: 0;
+  display: grid; place-items: center;
+  font-family: var(--font-kai); font-weight: 700; font-size: calc(var(--cell) * .6); line-height: 1;
+  color: var(--ink);
+  background-color: var(--surface);
+  background-image:
+    linear-gradient(to right, transparent calc(50% - .5px), var(--guide) calc(50% - .5px), var(--guide) calc(50% + .5px), transparent calc(50% + .5px)),
+    linear-gradient(to bottom, transparent calc(50% - .5px), var(--guide) calc(50% - .5px), var(--guide) calc(50% + .5px), transparent calc(50% + .5px));
+  border: 2px solid var(--wood-2); border-radius: 8px;
+  transition: background-color .15s, border-color .15s, transform .15s;
+}
+.cell.blank { border-style: dashed; border-color: var(--tile-edge); }
+.cell.filled { color: var(--celadon-ink); }
+.cell.in-word { background-color: var(--celadon-2); border-color: var(--celadon); }
+.cell.done { border-color: var(--celadon); border-style: solid; }
+.cell.sel { border-color: var(--gold); border-style: solid; box-shadow: 0 0 0 3px var(--gold); background-color: var(--gold-2); z-index: 1; }
+.cell:hover { transform: translateY(-1px); }
+.cell.pop { animation: pop .45s ease-out; }
+.cell.wrong { animation: shake .4s ease-in-out; border-color: var(--cinnabar); }
+
+.tray { padding: 14px 18px; display: flex; flex-direction: column; gap: 10px; }
+@media (min-width: 921px) {
+  .tray {
+    position: sticky; bottom: calc(10px + env(safe-area-inset-bottom, 0px)); z-index: 5;
+    box-shadow: 0 -6px 24px rgba(70, 45, 20, .12), var(--shadow);
+  }
+}
+.tray-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.tray-head h3 { font-family: var(--font-kai); font-size: 19px; color: var(--wood-3); }
+.tray-head span { font-size: 13px; color: var(--ink-3); }
+.tiles { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; min-height: 62px; }
+.tile {
+  width: 56px; height: 56px; padding: 0; border-radius: 11px;
+  font-family: var(--font-kai); font-weight: 700; font-size: 31px; line-height: 1; color: var(--ink);
+  background: linear-gradient(180deg, var(--tile-top), var(--tile-bot));
+  border: 2px solid var(--tile-edge);
+  box-shadow: 0 4px 0 var(--tile-shadow), 0 6px 10px rgba(0, 0, 0, .1);
+  transition: transform .12s cubic-bezier(.34, 1.56, .64, 1), box-shadow .12s, opacity .2s;
+}
+.tile:hover:not(:disabled) { transform: translateY(-2px); }
+.tile:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 1px 0 var(--tile-shadow); }
+.tile:disabled { opacity: .28; transform: translateY(3px); box-shadow: 0 1px 0 var(--tile-shadow); cursor: default; }
+.tile.wrong { animation: shake .4s ease-in-out; border-color: var(--cinnabar); }
+
+.info { padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; min-height: 300px; }
+.info-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; padding-bottom: 10px; border-bottom: 1.5px solid var(--paper-2); }
+.info-head h3 { font-family: var(--font-kai); font-size: 20px; color: var(--celadon-ink); }
+.speak-group { display: flex; gap: 6px; }
+.speak-btn { padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; border: 1px solid var(--celadon); background: var(--celadon-2); color: var(--celadon-ink); }
+.speak-btn.en { border-color: var(--gold); background: var(--gold-2); color: var(--wood-3); }
+.speak-btn:hover { filter: brightness(.97); }
+.word-plate { text-align: center; padding: 14px; border-radius: 14px; background: var(--paper); border: 1px solid var(--line); }
+.word-plate.solved { background: var(--celadon-2); border-color: var(--celadon); }
+.word-plate .label { font-size: 12px; color: var(--ink-3); font-weight: 700; margin-bottom: 8px; }
+.zhuyin { font-size: 13px; color: var(--celadon-ink); letter-spacing: .12em; font-weight: 700; }
+.big-word { font-family: var(--font-kai); font-weight: 700; font-size: 40px; letter-spacing: .25em; padding-left: .25em; color: var(--wood-3); line-height: 1.3; }
+.en-line { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--celadon); font-weight: 700; color: var(--celadon-ink); font-size: 15px; }
+.mask { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+.mask span {
+  width: 44px; height: 44px; display: grid; place-items: center; border-radius: 10px;
+  font-family: var(--font-kai); font-weight: 700; font-size: 26px;
+  background: var(--paper-2); color: var(--wood-3);
+}
+.mask span.q { background: var(--gold-2); color: var(--gold); border: 1.5px dashed var(--gold); }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field p { color: var(--ink); }
+.example { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; color: var(--ink-2); }
+.example .en { margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--line); font-style: italic; color: var(--celadon-ink); }
+.clue { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+.clue p { font-size: 16px; }
+.clue .en-clue { font-size: 14px; color: var(--celadon-ink); font-weight: 700; padding-top: 8px; border-top: 1px dashed var(--line); }
+.clue .en-clue i { font-weight: 500; }
+.hint-box { padding: 12px 14px; border-radius: 14px; background: var(--gold-2); border: 1.5px solid var(--gold); color: var(--ink); font-size: 14px; }
+.hint-box b { color: var(--wood-3); }
+
+.list-panel { padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; }
+.list-panel h3 { font-family: var(--font-kai); font-size: 18px; color: var(--wood-3); display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.list-panel h3 span { font-family: var(--font-sans); font-size: 12px; font-weight: 400; color: var(--ink-3); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { padding: 5px 12px; border-radius: 10px; font-family: var(--font-kai); font-weight: 700; font-size: 17px; border: 1.5px solid var(--line); background: var(--paper); color: var(--ink-3); letter-spacing: .08em; }
+.chip.solved { border-color: var(--celadon); background: var(--celadon-2); color: var(--celadon-ink); }
+.chip.active { box-shadow: 0 0 0 2px var(--gold); }
+.chip .mark { font-family: var(--font-sans); font-size: 12px; margin-right: 4px; }
+
+/* ---------- 彈窗 ---------- */
+.modal {
+  position: fixed; inset: 0; z-index: 50; background: var(--backdrop);
+  display: flex; align-items: center; justify-content: center;
+  padding: calc(16px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) calc(16px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+}
+.modal-card { width: 100%; max-width: 700px; max-height: 100%; display: flex; flex-direction: column; overflow: hidden; border-radius: 22px; background: var(--paper); border: 3px solid var(--wood); box-shadow: 0 20px 60px rgba(0, 0, 0, .35); }
+.modal-card.pop-in { animation: pop .5s ease-out; }
+.modal-head { padding: 20px 24px; background: var(--celadon); color: var(--on-celadon); text-align: center; display: flex; flex-direction: column; gap: 4px; }
+.modal-head.wood { background: var(--bar); color: var(--bar-ink); text-align: left; flex-direction: row; justify-content: space-between; align-items: center; gap: 12px; }
+.modal-head h2 { font-family: var(--font-kai); font-size: 28px; letter-spacing: .06em; }
+.modal-head.wood h2 { font-size: 22px; }
+.modal-head p { font-size: 14px; opacity: .92; }
+.modal-head .stars { font-size: 34px; letter-spacing: 6px; }
+.modal-head .stars .on { color: #FFD571; }
+.modal-head .stars .off { color: rgba(255, 255, 255, .3); }
+.modal-body { padding: 20px 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+.modal-foot { padding: 14px 20px; background: var(--paper-2); border-top: 1.5px solid var(--line); display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.modal-foot.end { justify-content: flex-end; }
+.close-x { width: 34px; height: 34px; border-radius: 50%; border: 0; background: rgba(0, 0, 0, .22); color: var(--bar-ink); font-size: 16px; font-weight: 700; flex: none; }
+.review { background: var(--surface); border: 1.5px solid var(--line); border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+.review-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.review-word { font-family: var(--font-kai); font-weight: 700; font-size: 24px; color: var(--wood-3); letter-spacing: .1em; margin-right: 8px; }
+.review .en { font-weight: 700; color: var(--celadon-ink); font-size: 14px; }
+.review .meaning { font-size: 14px; }
+.review .example { font-size: 13px; }
+.form-field { display: flex; flex-direction: column; gap: 6px; }
+.form-field label { font-weight: 700; font-size: 14px; color: var(--wood-3); }
+.form-field .row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.form-field input, .form-field textarea {
+  width: 100%; padding: 10px 14px; border-radius: 12px; border: 1.5px solid var(--line);
+  background: var(--surface); color: var(--ink); font: inherit; font-size: 15px;
+}
+.form-field textarea { min-height: 150px; resize: vertical; font-family: var(--font-kai); font-size: 17px; line-height: 1.7; }
+.form-field input:focus, .form-field textarea:focus { border-color: var(--celadon); outline: none; }
+.form-note { font-size: 13px; color: var(--ink-2); background: var(--surface); border: 1px dashed var(--line); border-radius: 12px; padding: 10px 12px; }
+.form-note code { font-family: var(--font-kai); background: var(--paper-2); padding: 0 5px; border-radius: 4px; }
+.form-msg { padding: 10px 12px; border-radius: 12px; background: var(--cinnabar-2); border: 1px solid var(--cinnabar); color: var(--cinnabar); font-weight: 700; font-size: 14px; }
+
+.toast {
+  position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); z-index: 60;
+  transform: translate(-50%, 12px); opacity: 0; pointer-events: none;
+  transition: opacity .25s, transform .25s;
+  max-width: calc(100% - 32px);
+  background: var(--wood-3); color: var(--paper); border: 2px solid var(--gold);
+  padding: 10px 18px; border-radius: 14px; font-weight: 700; font-size: 14px; box-shadow: var(--shadow);
+}
+:root[data-theme="dark"] .toast { background: var(--bar); color: var(--bar-ink); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .toast { background: var(--bar); color: var(--bar-ink); } }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+@keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+@keyframes pop { 0% { transform: scale(1); } 45% { transform: scale(1.13); } 100% { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+@media (max-width: 640px) {
+  .brand h1 { font-size: 19px; }
+  .brand small { display: none; }
+  .bar-btn .long { display: none; }
+  .hero { padding: 18px; }
+  .hero h2 { font-size: 26px; }
+  .tile { width: 44px; height: 44px; font-size: 25px; }
+  .tiles { gap: 8px; }
+  .board, .tray, .info, .list-panel { padding: 14px; }
+  .board-tip { display: none; }
+  .big-word { font-size: 32px; }
+}
+</style>
+
+<header class="topbar">
+  <div class="wrap">
+    <button class="brand" id="brand" type="button" aria-label="回選關大廳">
+      <span class="seal">成</span>
+      <span>
+        <h1>成語填字書院</h1>
+        <small>縱橫交錯的成語填字・中英雙語</small>
+      </span>
+    </button>
+    <div class="bar-actions">
+      <button class="bar-btn" id="btn-bilingual" type="button" aria-pressed="true"><span class="dot"></span>英文雙語</button>
+      <button class="bar-btn" id="btn-sound" type="button" aria-pressed="true"><span class="dot"></span>聲音</button>
+      <button class="bar-btn strong" id="btn-teacher" type="button">老師出題</button>
+      <button class="bar-btn" id="btn-lobby" type="button">選關<span class="long">大廳</span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ========== 選關大廳 ========== -->
+<main id="screen-lobby" class="wrap">
+  <section class="panel hero">
+    <div class="hero-text">
+      <span class="eyebrow">國中小必備成語・八關</span>
+      <h2>選一關，開始填字</h2>
+      <p>格子裡藏著幾句互相交叉的四字成語。點一個空格看意思線索，再從字盤挑出正確的字。交叉的那一格，要同時符合橫的和直的兩句。</p>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="label">累計星星</div><div class="value num"><span class="gold" id="total-stars">0</span> / <span id="max-stars">24</span></div></div>
+      <div class="stat"><div class="label">書院金幣</div><div class="value num" id="total-coins">0</div></div>
+    </div>
+  </section>
+
+  <section id="custom-section" hidden>
+    <div class="section-head">
+      <h3>老師出的題</h3>
+      <span class="hint">存在這台電腦的瀏覽器裡</span>
+    </div>
+    <div class="level-grid" id="custom-grid"></div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h3>書院八關</h3>
+      <button class="link-btn" id="btn-reset" type="button">重設星星與金幣</button>
+    </div>
+    <div class="level-grid" id="level-grid"></div>
+  </section>
+</main>
+
+<!-- ========== 遊戲畫面 ========== -->
+<main id="screen-game" class="wrap" hidden>
+  <section class="panel status">
+    <div class="status-left">
+      <span class="badge" id="g-badge">第 1 關</span>
+      <div>
+        <div class="status-title" id="g-title">初出茅廬</div>
+        <div class="status-sub">已完成 <b class="num" id="g-solved">0</b> / <span class="num" id="g-total">5</span> 句</div>
+      </div>
+    </div>
+    <div class="status-mid">
+      <span class="pill" title="答錯一次扣一顆，剩幾顆就拿幾顆星"><span class="hearts" id="g-hearts"></span></span>
+      <span class="pill num" id="g-timer">00:00</span>
+    </div>
+    <div class="status-right">
+      <button class="btn btn-small" id="btn-mode" type="button" title="進階模式會在字盤多放 3 個干擾字，切換後本關重新開始">基礎模式</button>
+      <button class="btn btn-small" id="btn-restart" type="button">重來</button>
+      <button class="btn btn-primary btn-small" id="btn-hint" type="button">提示 <span class="num" id="g-hints">3</span></button>
+    </div>
+  </section>
+
+  <div class="game-cols">
+    <div class="col">
+      <section class="panel board">
+        <div class="board-head">
+          <span class="dir-indicator" id="g-dir">點一個空格開始</span>
+          <span class="board-tip">交叉格再點一次可換橫／直・方向鍵移動・空白鍵換方向</span>
+        </div>
+        <div class="grid-scroll" id="grid-scroll">
+          <div class="cw-grid" id="cw-grid"></div>
+        </div>
+      </section>
+      <section class="panel tray">
+        <div class="tray-head">
+          <h3>字盤</h3>
+          <span id="g-tray-sub">點字就會填進上面框起來的格子</span>
+        </div>
+        <div class="tiles" id="tiles"></div>
+      </section>
+    </div>
+
+    <div class="col">
+      <section class="panel info">
+        <div class="info-head">
+          <h3>成語小百科</h3>
+          <div class="speak-group" id="speak-group" hidden>
+            <button class="speak-btn" id="speak-zh" type="button">朗讀國語</button>
+            <button class="speak-btn en" id="speak-en" type="button">朗讀英文</button>
+          </div>
+        </div>
+        <div id="info-body"></div>
+        <div class="hint-box" id="hint-box" hidden></div>
+      </section>
+      <section class="panel list-panel">
+        <h3>本關成語 <span>完成的可以點來複習</span></h3>
+        <div class="chips" id="chips"></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<!-- ========== 過關彈窗 ========== -->
+<div class="modal" id="modal-victory" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="v-title">
+    <div class="modal-head">
+      <div class="stars" id="v-stars"></div>
+      <h2 id="v-title">過關了！</h2>
+      <p>用時 <b class="num" id="v-time">00:00</b>　剩餘愛心 <b class="num" id="v-hearts">3</b>　金幣 <b class="num" id="v-coins">+30</b></p>
+    </div>
+    <div class="modal-body">
+      <h3 class="kai" style="font-size:19px;color:var(--wood-3)">本關成語複習</h3>
+      <div id="v-list" style="display:flex;flex-direction:column;gap:12px"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" id="v-lobby" type="button">回選關大廳</button>
+      <button class="btn btn-wood" id="v-replay" type="button">再玩一次</button>
+      <button class="btn btn-primary" id="v-next" type="button">下一關</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 老師出題彈窗 ========== -->
+<div class="modal" id="modal-teacher" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="t-title">
+    <div class="modal-head wood">
+      <div>
+        <h2 id="t-title">老師出題</h2>
+        <p>輸入成語，系統自動排成縱橫填字</p>
+      </div>
+      <button class="close-x" id="t-close" type="button" aria-label="關閉">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-field">
+        <label for="t-name">關卡名稱</label>
+        <input id="t-name" type="text" placeholder="例如：三年級國語第三課" value="本週成語練習">
+      </div>
+      <div class="form-field">
+        <div class="row">
+          <label for="t-input">成語（2 到 8 句）</label>
+          <button class="link-btn" id="t-sample" type="button" style="color:var(--celadon-ink)">填入示範題目</button>
+        </div>
+        <div class="form-note">
+          可以只打成語，一行一句，或用頓號、空格隔開，例如 <code>一舉兩得、得心應手</code>。內建題庫有的成語會自動帶出注音、釋義和英文。<br>
+          想自己寫解釋，就用 <code>成語 | 英文 | 中文釋義</code> 的格式，一行一句。<br>
+          成語之間有相同的字才接得起來，沒有共同字的成語會單獨放在旁邊。
+        </div>
+        <textarea id="t-input" placeholder="一舉兩得 | Kill two birds with one stone | 做一件事同時得到兩種好處。&#10;得心應手&#10;手忙腳亂"></textarea>
+      </div>
+      <div class="form-msg" id="t-msg" hidden></div>
+    </div>
+    <div class="modal-foot end">
+      <button class="btn" id="t-cancel" type="button">取消</button>
+      <button class="btn btn-primary" id="t-create" type="button">排好格子，開始玩</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =========================================================
+   1. 成語資料庫（注音、英文、釋義、中英例句）
+   ========================================================= */
+const DICT = {
+  // 第 1 關
+  "一心一意": { zhuyin: "ㄧˋ ㄒㄧㄣ ㄧˊ ㄧˋ", english: "Wholeheartedly / With single-hearted devotion", meaning: "形容心思專一，沒有別的念頭。", example: "小明上課時總是「一心一意」地聽老師講解，從不分心。", exampleEn: "Ming always listens to the teacher wholeheartedly in class without getting distracted." },
+  "一舉兩得": { zhuyin: "ㄧˋ ㄐㄩˇ ㄌㄧㄤˇ ㄉㄜˊ", english: "Kill two birds with one stone", meaning: "做一件事同時得到兩種好處。", example: "走路上下學既能運動又能省錢，真是「一舉兩得」。", exampleEn: "Walking to school gets you exercise and saves money—it really kills two birds with one stone." },
+  "得心應手": { zhuyin: "ㄉㄜˊ ㄒㄧㄣ ㄧㄥˋ ㄕㄡˇ", english: "Have something at one's fingertips / Proficient and effortless", meaning: "心裡怎麼想，手就能怎麼做，形容技藝純熟、做事非常順利。", example: "經過不斷練習，她現在彈鋼琴已經非常「得心應手」了。", exampleEn: "After constant practice, playing the piano is now effortless for her." },
+  "手忙腳亂": { zhuyin: "ㄕㄡˇ ㄇㄤˊ ㄐㄧㄠˇ ㄌㄨㄢˋ", english: "In a frantic rush / All thumbs", meaning: "形容做事慌張、沒有條理的樣子。", example: "早上睡過頭了，他急得「手忙腳亂」，差點忘了帶書包。", exampleEn: "He overslept this morning and was in such a frantic rush that he almost forgot his schoolbag." },
+  "三心二意": { zhuyin: "ㄙㄢ ㄒㄧㄣ ㄦˋ ㄧˋ", english: "Be of two minds / Half-hearted and indecisive", meaning: "意志不堅定，猶豫不決，或做事不專心。", example: "寫功課要專心，如果「三心二意」就會寫到很晚喔！", exampleEn: "Focus on your homework; if you are half-hearted, you will stay up very late!" },
+  // 第 2 關
+  "守株待兔": { zhuyin: "ㄕㄡˇ ㄓㄨ ㄉㄞˋ ㄊㄨˋ", english: "Wait for windfalls / Leave things to chance", meaning: "比喻不知變通，只想不勞而獲、死守狹隘經驗。", example: "成功要靠自己努力，如果只會「守株待兔」，什麼事也做不成。", exampleEn: "Success requires hard work; if you just wait for windfalls, you will achieve nothing." },
+  "兔死狐悲": { zhuyin: "ㄊㄨˋ ㄙˇ ㄏㄨˊ ㄅㄟ", english: "The fox mourns the death of the hare / Feel sad for one's own kind", meaning: "兔子死了，狐狸感到悲傷。比喻因同類的不幸而感到悲痛。", example: "看到好朋友被老師責備，他也難過得有種「兔死狐悲」的感覺。", exampleEn: "Seeing his best friend scolded by the teacher, he felt a sympathetic sadness." },
+  "狐假虎威": { zhuyin: "ㄏㄨˊ ㄐㄧㄚˇ ㄏㄨˇ ㄨㄟ", english: "Bully others by flaunting powerful connections", meaning: "狐狸假借老虎的威風嚇跑百獸。比喻倚仗別人的勢力來欺壓人。", example: "他只是班長的跟班，卻常在班上「狐假虎威」地指揮同學。", exampleEn: "He is just the class leader's follower, yet he bosses classmates around using the leader's authority." },
+  "虎頭蛇尾": { zhuyin: "ㄏㄨˇ ㄊㄡˊ ㄕㄜˊ ㄨㄟˇ", english: "In like a lion, out like a lamb / Fine start and poor finish", meaning: "頭大如虎，尾細如蛇。比喻做事起初很有聲勢，後來卻草率收場。", example: "訂定讀書計畫後要堅持到底，千萬不能「虎頭蛇尾」。", exampleEn: "Stick to your study plan until the end; never start strong and finish poorly." },
+  "畫蛇添足": { zhuyin: "ㄏㄨㄚˋ ㄕㄜˊ ㄊㄧㄢ ㄗㄨˊ", english: "Gild the lily / Overdo things and ruin the effect", meaning: "畫好了蛇又多畫上腳。比喻做了多餘的事，反而把事情弄糟。", example: "這幅畫已經很完美了，再加顏色反而顯得「畫蛇添足」。", exampleEn: "This painting is already perfect; adding more colors would just be gilding the lily." },
+  // 第 3 關
+  "孜孜不倦": { zhuyin: "ㄗ ㄗ ㄅㄨˋ ㄐㄩㄢˋ", english: "Diligent and tireless", meaning: "勤奮努力，一點也不覺得疲倦。", example: "姊姊為了準備會考「孜孜不倦」，每天都讀到很晚。", exampleEn: "My sister studied tirelessly for the entrance exam, reading late every night." },
+  "漸入佳境": { zhuyin: "ㄐㄧㄢˋ ㄖㄨˋ ㄐㄧㄚ ㄐㄧㄥˋ", english: "Getting better and better", meaning: "比喻情況慢慢變好，或興趣越來越濃厚。", example: "剛開始學游泳時常常嗆水，練了一個月後終於「漸入佳境」。", exampleEn: "He swallowed a lot of water when he started swimming, but after a month of practice he got better and better." },
+  "不恥下問": { zhuyin: "ㄅㄨˋ ㄔˇ ㄒㄧㄚˋ ㄨㄣˋ", english: "Not feel ashamed to ask and learn from one's subordinates", meaning: "不以向地位或學問比自己低的人請教為可恥。", example: "王老師雖然學問淵博，但仍然「不恥下問」，常向年輕人學習新科技。", exampleEn: "Although Professor Wang is very learned, he is never ashamed to learn new technology from young people." },
+  "問心無愧": { zhuyin: "ㄨㄣˋ ㄒㄧㄣ ㄨˊ ㄎㄨㄟˋ", english: "Have a clear conscience", meaning: "反省自己，覺得沒有做對不起良心的事。", example: "只要我們盡力準備比賽，不論結果如何都能「問心無愧」。", exampleEn: "As long as we try our best to prepare for the contest, we can have a clear conscience regardless of the result." },
+  "學無止境": { zhuyin: "ㄒㄩㄝˊ ㄨˊ ㄓˇ ㄐㄧㄥˋ", english: "Knowledge is infinite / There is no end to learning", meaning: "知識學問是沒有盡頭的，應該不斷學習。", example: "俗話說「學無止境」，即使畢業了還是要保持閱讀的好習慣。", exampleEn: "As the saying goes, there is no end to learning; keep reading even after graduation." },
+  "勤學苦練": { zhuyin: "ㄑㄧㄣˊ ㄒㄩㄝˊ ㄎㄨˇ ㄌㄧㄢˋ", english: "Study diligently and practice hard", meaning: "勤奮地學習，刻苦地練習。", example: "她每天放學後都「勤學苦練」，終於在書法比賽中得到第一名。", exampleEn: "She studied diligently and practiced hard after school every day, and finally won first place in the calligraphy contest." },
+  "勤能補拙": { zhuyin: "ㄑㄧㄣˊ ㄋㄥˊ ㄅㄨˇ ㄓㄨㄛˊ", english: "Diligence can make up for a lack of natural talent", meaning: "勤奮努力可以彌補天資的不足。", example: "他相信「勤能補拙」，每天多花半小時練習英文，終於考出好成績。", exampleEn: "Believing diligence makes up for lack of talent, he practiced English daily and got great grades." },
+  // 第 4 關
+  "春暖花開": { zhuyin: "ㄔㄨㄣ ㄋㄨㄢˇ ㄏㄨㄚ ㄎㄞ", english: "Warm spring and blooming flowers", meaning: "春天天氣溫暖，百花盛開，形容春意盎然的美好景象。", example: "「春暖花開」的季節裡，全家人最適合一起去郊外踏青野餐。", exampleEn: "In the season of warm spring and blooming flowers, it's perfect for a family picnic." },
+  "開門見山": { zhuyin: "ㄎㄞ ㄇㄣˊ ㄐㄧㄢˋ ㄕㄢ", english: "Come straight to the point / Not beat around the bush", meaning: "打開門就能看見山。比喻說話或寫文章直接切入主題，不拐彎抹角。", example: "寫作文時，第一段如果能「開門見山」點出主題，會讓讀者印象深刻。", exampleEn: "When writing an essay, coming straight to the point in the first paragraph impresses readers." },
+  "山明水秀": { zhuyin: "ㄕㄢ ㄇㄧㄥˊ ㄕㄨㄟˇ ㄒㄧㄡˋ", english: "Picturesque scenery / Green hills and clear waters", meaning: "山色明麗，水光秀美，形容風景非常優美。", example: "日月潭「山明水秀」，每年都吸引許多國內外遊客前來欣賞。", exampleEn: "Sun Moon Lake has picturesque scenery, attracting many tourists every year." },
+  "水落石出": { zhuyin: "ㄕㄨㄟˇ ㄌㄨㄛˋ ㄕˊ ㄔㄨ", english: "The whole truth comes to light", meaning: "水退下去，水底的石頭就露出來。比喻事情的真相完全顯露。", example: "經過警察仔細調查，這起失竊案終於「水落石出」了。", exampleEn: "After a careful police investigation, the whole truth of the theft finally came to light." },
+  "出人頭地": { zhuyin: "ㄔㄨ ㄖㄣˊ ㄊㄡˊ ㄉㄧˋ", english: "Stand out among one's peers / Rise above the crowd", meaning: "超越一般人，成就高人一等。", example: "他從小立志要努力向學，將來在社會上「出人頭地」。", exampleEn: "He resolved to study hard from a young age so he could stand out in society." },
+  // 第 5 關
+  "飲水思源": { zhuyin: "ㄧㄣˇ ㄕㄨㄟˇ ㄙ ㄩㄢˊ", english: "Remember the source when drinking water / Be grateful", meaning: "喝水的時候想到水的源頭。比喻不忘本，感謝給予幫助的人。", example: "我們要懂得「飲水思源」，感謝父母和師長的辛苦栽培。", exampleEn: "We should be grateful and remember the hard work of our parents and teachers." },
+  "源源不絕": { zhuyin: "ㄩㄢˊ ㄩㄢˊ ㄅㄨˋ ㄐㄩㄝˊ", english: "In an endless stream / Continuous and inexhaustible", meaning: "形容接連不斷，像水流一樣沒有停止。", example: "他的創作靈感「源源不絕」，很快就寫出了一篇精彩的故事。", exampleEn: "His creative inspiration flowed in an endless stream, and he quickly wrote a great story." },
+  "絕處逢生": { zhuyin: "ㄐㄩㄝˊ ㄔㄨˋ ㄈㄥˊ ㄕㄥ", english: "Be saved from a desperate situation / Find hope in despair", meaning: "在走投無路的困境中，突然找到生機或轉機。", example: "登山隊在迷路三天後終於遇到搜救人員，真是「絕處逢生」。", exampleEn: "After being lost for three days, the hikers found rescuers—truly saved from a desperate situation." },
+  "自力更生": { zhuyin: "ㄗˋ ㄌㄧˋ ㄍㄥ ㄕㄥ", english: "Self-reliance / Stand on one's own feet", meaning: "不依賴別人，靠自己的力量把事情做好。", example: "哥哥上大學後打工賺學費，學會了「自力更生」。", exampleEn: "After starting university, my brother worked part-time to pay his tuition and learned to stand on his own feet." },
+  "自強不息": { zhuyin: "ㄗˋ ㄑㄧㄤˊ ㄅㄨˋ ㄒㄧ", english: "Strive constantly for self-improvement", meaning: "自己努力向上，永遠不停止。", example: "他雖然行動不便，卻「自強不息」，每天練習寫字和畫畫。", exampleEn: "Although he has trouble moving, he constantly strives to improve, practicing writing and drawing every day." },
+  "見賢思齊": { zhuyin: "ㄐㄧㄢˋ ㄒㄧㄢˊ ㄙ ㄑㄧˊ", english: "Strive to emulate those better than oneself", meaning: "看到品德或才能比自己好的人，就想向他看齊。", example: "看到同學每天主動幫忙整理教室，我也「見賢思齊」，跟著一起做。", exampleEn: "Seeing a classmate tidy the classroom every day, I followed the good example and joined in." },
+  // 第 6 關
+  "井底之蛙": { zhuyin: "ㄐㄧㄥˇ ㄉㄧˇ ㄓ ㄨㄚ", english: "A frog in a well / A person with a very limited outlook", meaning: "住在井底下的青蛙只能看到井口大的天空。比喻見識狹隘的人。", example: "我們要多看書、多觀察世界，才不會變成目光短淺的「井底之蛙」。", exampleEn: "We should read more and observe the world so we don't become a frog in a well." },
+  "坐井觀天": { zhuyin: "ㄗㄨㄛˋ ㄐㄧㄥˇ ㄍㄨㄢ ㄊㄧㄢ", english: "View the sky from the bottom of a well / Have a narrow view", meaning: "坐在井底看天，只看得到一小片。比喻眼界狹小、見識有限。", example: "出國參加夏令營後，他才發現自己以前真是「坐井觀天」。", exampleEn: "After a summer camp abroad, he realized how narrow his view of the world had been." },
+  "杞人憂天": { zhuyin: "ㄑㄧˇ ㄖㄣˊ ㄧㄡ ㄊㄧㄢ", english: "Worry that the sky will fall / Needless worry", meaning: "杞國有個人整天擔心天會塌下來。比喻沒有必要的憂慮。", example: "考試準備得很充分，就別再「杞人憂天」，擔心會考不好了。", exampleEn: "You have prepared well for the exam, so stop worrying needlessly about failing." },
+  "驚弓之鳥": { zhuyin: "ㄐㄧㄥ ㄍㄨㄥ ㄓ ㄋㄧㄠˇ", english: "Once bitten, twice shy / A bird startled by the twang of a bow", meaning: "被弓箭嚇怕的鳥，聽到弓弦聲就會掉下來。比喻受過驚嚇，稍有動靜就非常害怕的人。", example: "被狗追過一次之後，小華就像「驚弓之鳥」，聽到狗叫就躲起來。", exampleEn: "After being chased by a dog once, Hua is twice shy and hides whenever he hears barking." },
+  "三人成虎": { zhuyin: "ㄙㄢ ㄖㄣˊ ㄔㄥˊ ㄏㄨˇ", english: "A lie repeated often enough becomes the truth", meaning: "三個人都說市集裡有老虎，大家就信了。比喻謠言說的人一多，就會讓人信以為真。", example: "網路上的消息要先查證，別讓「三人成虎」的謠言越傳越廣。", exampleEn: "Check online news before sharing it, so rumors don't spread just because many people repeat them." },
+  "杯弓蛇影": { zhuyin: "ㄅㄟ ㄍㄨㄥ ㄕㄜˊ ㄧㄥˇ", english: "Frightened by imaginary fears / Mistake a bow's reflection for a snake", meaning: "把映在酒杯裡的弓影誤認為蛇。比喻疑神疑鬼，自己嚇自己。", example: "窗外只是樹影在晃動，你別「杯弓蛇影」，以為有小偷。", exampleEn: "It's just the shadow of a tree outside the window; don't scare yourself into thinking there's a thief." },
+  // 第 7 關
+  "水到渠成": { zhuyin: "ㄕㄨㄟˇ ㄉㄠˋ ㄑㄩˊ ㄔㄥˊ", english: "Success comes naturally when conditions are ripe", meaning: "水流到的地方自然形成渠道。比喻條件成熟後，事情自然成功。", example: "只要平時把基本功練好，比賽時自然能「水到渠成」，獲得好成績。", exampleEn: "If you master the basics daily, success will come naturally during the competition." },
+  "成千上萬": { zhuyin: "ㄔㄥˊ ㄑㄧㄢ ㄕㄤˋ ㄨㄢˋ", english: "Tens of thousands / Countless", meaning: "形容數量非常多。", example: "每年冬天，都有「成千上萬」隻候鳥飛到台南七股過冬。", exampleEn: "Every winter, tens of thousands of migratory birds fly to Qigu, Tainan." },
+  "萬紫千紅": { zhuyin: "ㄨㄢˋ ㄗˇ ㄑㄧㄢ ㄏㄨㄥˊ", english: "A riot of colors / Profusion of colorful flowers", meaning: "形容百花齊放、色彩繽紛的景象。", example: "花園裡種滿了各種花朵，春天一到便開得「萬紫千紅」，美不勝收。", exampleEn: "The garden is full of flowers that bloom in a riot of colors when spring arrives." },
+  "紅光滿面": { zhuyin: "ㄏㄨㄥˊ ㄍㄨㄤ ㄇㄢˇ ㄇㄧㄢˋ", english: "Glowing with health / Rosy-cheeked", meaning: "臉色紅潤有光澤，形容精神好、身體健康。", example: "爺爺每天早上去爬山，八十歲了還是「紅光滿面」。", exampleEn: "Grandpa hikes every morning, and at eighty he is still glowing with health." },
+  "面面俱到": { zhuyin: "ㄇㄧㄢˋ ㄇㄧㄢˋ ㄐㄩˋ ㄉㄠˋ", english: "Take every aspect into account / Thorough in every way", meaning: "各方面都照顧到，沒有遺漏。", example: "班長規劃的校外教學「面面俱到」，連下雨備案都想好了。", exampleEn: "The class leader planned the field trip thoroughly, even preparing a backup plan for rain." },
+  "千言萬語": { zhuyin: "ㄑㄧㄢ ㄧㄢˊ ㄨㄢˋ ㄩˇ", english: "Countless words / A thousand things to say", meaning: "形容要說的話非常多。", example: "畢業典禮上，大家心中有「千言萬語」，卻只化成一句謝謝老師。", exampleEn: "At graduation, everyone had a thousand things to say, yet it all became a simple thank-you to the teacher." },
+  // 第 8 關
+  "名副其實": { zhuyin: "ㄇㄧㄥˊ ㄈㄨˋ ㄑㄧˊ ㄕˊ", english: "Worthy of the name / Live up to one's reputation", meaning: "名聲或名稱與實際情況完全相符合。", example: "他連續三年獲得全校演講比賽冠軍，真是「名副其實」的演講高手。", exampleEn: "Winning the school speech contest three years in a row, he truly lives up to his reputation." },
+  "實事求是": { zhuyin: "ㄕˊ ㄕˋ ㄑㄧㄡˊ ㄕˋ", english: "Seek truth from facts / Be practical and realistic", meaning: "從實際情況出發，認真研究並找出事情的真相與規律。", example: "做科學實驗必須秉持「實事求是」的精神，不能隨便猜測數據。", exampleEn: "Scientific experiments require seeking truth from facts rather than guessing data." },
+  "是非曲直": { zhuyin: "ㄕˋ ㄈㄟ ㄑㄩ ㄓˊ", english: "Right and wrong / The merits of a case", meaning: "事情的對與錯、合理與不合理。", example: "老師在處理同學爭執時，總是先聽雙方說明，再判斷「是非曲直」。", exampleEn: "When handling disputes, the teacher always listens to both sides before judging right and wrong." },
+  "直截了當": { zhuyin: "ㄓˊ ㄐㄧㄝˊ ㄌㄧㄠˇ ㄉㄤˋ", english: "Straightforward / Blunt and to the point", meaning: "形容說話或做事爽快乾脆，不繞圈子。", example: "他個性很爽朗，有什麼建議都會「直截了當」地說出來。", exampleEn: "He has an open personality and always gives his suggestions in a straightforward way." },
+  "當機立斷": { zhuyin: "ㄉㄤ ㄐㄧ ㄌㄧˋ ㄉㄨㄢˋ", english: "Make a prompt decision at the crucial moment", meaning: "抓住時機，毫不猶豫地做出決定。", example: "發現山區開始下大雨時，領隊「當機立斷」決定提前下山，確保大家安全。", exampleEn: "When heavy rain began in the mountains, the leader made a prompt decision to descend early." },
+  "斷章取義": { zhuyin: "ㄉㄨㄢˋ ㄓㄤ ㄑㄩˇ ㄧˋ", english: "Quote out of context", meaning: "不顧全篇文章或談話的完整意思，只截取其中一段來曲解原意。", example: "我們要完整理解別人的話，千萬不可以「斷章取義」，造成誤會。", exampleEn: "We must understand others' words completely and never quote them out of context." },
+  // 題庫備用（老師出題時可自動帶出資料）
+  "足智多謀": { zhuyin: "ㄗㄨˊ ㄓˋ ㄉㄨㄛ ㄇㄡˊ", english: "Wise and resourceful / Full of stratagems", meaning: "形容人非常聰明，很有計謀與辦法。", example: "三國時代的諸葛亮「足智多謀」，常常想出妙計打敗敵人。", exampleEn: "Zhuge Liang of the Three Kingdoms was wise and resourceful, often devising brilliant plans." },
+  "生龍活虎": { zhuyin: "ㄕㄥ ㄌㄨㄥˊ ㄏㄨㄛˊ ㄏㄨˇ", english: "Full of vim and vigor / As lively as a dragon and tiger", meaning: "形容人非常有活力、精神飽滿的樣子。", example: "下課鐘聲一響，同學們個個「生龍活虎」地衝向操場打球。", exampleEn: "As soon as the bell rang, the students ran to the playground full of vim and vigor." },
+  "亡羊補牢": { zhuyin: "ㄨㄤˊ ㄧㄤˊ ㄅㄨˇ ㄌㄠˊ", english: "Mend the fold after the sheep is lost / Better late than never", meaning: "羊逃跑了才趕快修補羊圈。比喻發現錯誤後及時補救，還不算太晚。", example: "這次月考沒考好沒關係，現在開始認真複習，「亡羊補牢」還來得及。", exampleEn: "It's okay if you didn't do well on the test; start reviewing now—it's never too late to mend." },
+  "牢不可破": { zhuyin: "ㄌㄠˊ ㄅㄨˋ ㄎㄜˇ ㄆㄛˋ", english: "Unbreakable / Indestructible", meaning: "非常堅固，無法摧毀。也用來形容友誼或信念非常堅定。", example: "他們從國小就認識，彼此之間建立起「牢不可破」的深厚友誼。", exampleEn: "They have known each other since elementary school and built an unbreakable friendship." },
+  "破釜沉舟": { zhuyin: "ㄆㄛˋ ㄈㄨˇ ㄔㄣˊ ㄓㄡ", english: "Burn one's bridges / Fight with no retreat", meaning: "打破煮飯的鍋子、鑿沉渡河的船。比喻下定決心，不顧一切奮戰到底。", example: "為了考上理想的學校，哥哥抱著「破釜沉舟」的決心全力衝刺。", exampleEn: "To get into his dream school, my brother burned his bridges and studied with full determination." },
+  "刻舟求劍": { zhuyin: "ㄎㄜˋ ㄓㄡ ㄑㄧㄡˊ ㄐㄧㄢˋ", english: "Mark the boat to find a lost sword / Stubbornly ignore changes", meaning: "在船上刻記號，想找回掉進河裡的劍。比喻做事死板，不懂得隨情況變通。", example: "時代已經改變，讀書方法也要跟著調整，不能「刻舟求劍」。", exampleEn: "Times have changed, so study methods should change too; don't stubbornly stick to the old way." },
+  "命中注定": { zhuyin: "ㄇㄧㄥˋ ㄓㄨㄥ ㄓㄨˋ ㄉㄧㄥˋ", english: "Meant to be / Predestined by fate", meaning: "指事情像是早就被安排好一樣，無法改變。", example: "他們在不同城市長大卻考進同一所學校，彷彿是「命中注定」要成為好友。", exampleEn: "They grew up in different cities yet entered the same school, as if meant to be best friends." },
+  "定國安邦": { zhuyin: "ㄉㄧㄥˋ ㄍㄨㄛˊ ㄢ ㄅㄤ", english: "Bring peace and stability to the nation", meaning: "使國家安定太平。", example: "歷史上許多忠臣良將都懷抱著「定國安邦」的遠大志向。", exampleEn: "Many loyal ministers and generals in history aspired to bring peace and stability to the nation." }
+};
+
+/* =========================================================
+   2. 內建八關（每關的成語都至少和另一句共用一個字）
+   ========================================================= */
+const LEVELS = [
+  { id: "lvl_1", number: 1, title: "初出茅廬", grade: "國小低中年級", desc: "從熟悉的數字成語開始，先學會交叉填字的規則。", idioms: ["一心一意", "一舉兩得", "得心應手", "手忙腳亂", "三心二意"] },
+  { id: "lvl_2", number: 2, title: "動物樂園", grade: "國小低中年級", desc: "兔子、狐狸、老虎和蛇輪流登場，一句接一句。", idioms: ["守株待兔", "兔死狐悲", "狐假虎威", "虎頭蛇尾", "畫蛇添足"] },
+  { id: "lvl_3", number: 3, title: "勤學好問", grade: "國小中年級", desc: "和讀書態度有關的成語，寫作文也用得上。", idioms: ["孜孜不倦", "不恥下問", "問心無愧", "學無止境", "漸入佳境"] },
+  { id: "lvl_4", number: 4, title: "自然風光", grade: "國小中年級", desc: "描寫山水與季節的成語，從春天一路走到山水之間。", idioms: ["春暖花開", "開門見山", "山明水秀", "水落石出", "出人頭地"] },
+  { id: "lvl_5", number: 5, title: "品格修養", grade: "國小中高年級", desc: "懂得感恩、靠自己、向好榜樣看齊。", idioms: ["飲水思源", "源源不絕", "絕處逢生", "自力更生", "自強不息"] },
+  { id: "lvl_6", number: 6, title: "寓言故事", grade: "國小中高年級", desc: "井底的青蛙、怕天塌的杞人，每句背後都有一個故事。", idioms: ["井底之蛙", "坐井觀天", "杞人憂天", "驚弓之鳥", "三人成虎"] },
+  { id: "lvl_7", number: 7, title: "融會貫通", grade: "國小高年級", desc: "6 句成語縱橫交錯，考驗你的字彙量。", idioms: ["水到渠成", "成千上萬", "萬紫千紅", "紅光滿面", "面面俱到", "千言萬語"] },
+  { id: "lvl_8", number: 8, title: "博古通今", grade: "高年級・國中", desc: "書院最高挑戰，6 句進階成語一路接到底。", idioms: ["名副其實", "實事求是", "是非曲直", "直截了當", "當機立斷", "斷章取義"] }
+];
+const CN_NUM = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
+const DISTRACTORS = "風雲天地光明清白高大長遠飛走看聽說笑喜樂百十五八九金木火土日月星海林竹".split("");
+
+/* =========================================================
+   3. 存檔（只存在這個瀏覽器）
+   ========================================================= */
+const STORE_KEY = "idiom-crossword-v1";
+const store = { progress: {}, coins: 0, customLevels: [], customDict: {}, bilingual: true, sound: true, mode: "basic" };
+function loadStore() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (raw) Object.assign(store, JSON.parse(raw));
+  } catch (e) { /* 讀不到就用預設值 */ }
+}
+function saveStore() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch (e) { /* 無法存檔時照常遊玩 */ }
+}
+function getInfo(text) { return store.customDict[text] || DICT[text] || null; }
+
+/* =========================================================
+   4. 小工具
+   ========================================================= */
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }
+  return arr;
+}
+function starsHtml(n) {
+  let s = "";
+  for (let i = 1; i <= 3; i++) s += `<span class="${i <= n ? "on" : "off"}">★</span>`;
+  return `<span class="stars">${s}</span>`;
+}
+function fmtTime(sec) { return `${String(Math.floor(sec / 60)).padStart(2, "0")}:${String(sec % 60).padStart(2, "0")}`; }
+let toastTimer = null;
+function toast(msg) {
+  const el = $("toast");
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 2400);
+}
+// 兩段式確認（畫面裡無法跳出確認對話框）
+function armButton(btn, armedText, action) {
+  if (btn.dataset.armed === "1") {
+    btn.dataset.armed = "0"; btn.classList.remove("armed");
+    action();
+    return;
+  }
+  const original = btn.textContent;
+  btn.dataset.armed = "1"; btn.classList.add("armed"); btn.textContent = armedText;
+  setTimeout(() => {
+    if (btn.isConnected && btn.dataset.armed === "1") { btn.dataset.armed = "0"; btn.classList.remove("armed"); btn.textContent = original; }
+  }, 3000);
+}
+
+/* =========================================================
+   5. 音效（Web Audio 合成）與朗讀（瀏覽器語音）
+   ========================================================= */
+let audioCtx = null;
+function ensureAudio() {
+  if (!audioCtx) {
+    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { audioCtx = null; }
+  }
+  if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+}
+function note(freq, start, dur, type = "sine", vol = 0.12) {
+  const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+  o.type = type; o.frequency.value = freq;
+  const t = audioCtx.currentTime + start;
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(vol, t + 0.015);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  o.connect(g); g.connect(audioCtx.destination);
+  o.start(t); o.stop(t + dur + 0.02);
+}
+function tone(kind) {
+  if (!store.sound) return;
+  ensureAudio();
+  if (!audioCtx) return;
+  if (kind === "tap") note(880, 0, 0.06, "triangle", 0.06);
+  else if (kind === "correct") { note(659.25, 0, 0.12, "triangle"); note(987.77, 0.08, 0.18, "triangle"); }
+  else if (kind === "wrong") { note(196, 0, 0.22, "sawtooth", 0.07); note(174.6, 0.1, 0.25, "sawtooth", 0.06); }
+  else if (kind === "word") [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => note(f, i * 0.09, 0.3, "triangle", 0.1));
+  else if (kind === "victory") [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5].forEach((f, i) => note(f, [0, .1, .2, .32, .5, .64][i], i === 5 ? 0.6 : 0.22, "triangle", 0.11));
+}
+function speak(text, lang = "zh-TW") {
+  if (!store.sound || !("speechSynthesis" in window) || !text) return;
+  try {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = lang;
+    const voices = window.speechSynthesis.getVoices();
+    const prefix = lang.toLowerCase();
+    const voice = voices.find((v) => v.lang.replace("_", "-").toLowerCase() === prefix)
+      || voices.find((v) => v.lang.replace("_", "-").toLowerCase().startsWith(prefix.slice(0, 2)));
+    if (voice) u.voice = voice;
+    u.rate = lang.startsWith("en") ? 0.88 : 0.85;
+    window.speechSynthesis.speak(u);
+  } catch (e) { /* 不支援語音就略過 */ }
+}
+const firstEnglish = (info) => (info && info.english ? info.english.split("/")[0].trim() : "");
+
+/* =========================================================
+   6. 排格子引擎：把成語排成縱橫交錯的格子
+   ========================================================= */
+const keyOf = (r, c) => r + "," + c;
+function bboxOf(cells) {
+  let minR = Infinity, maxR = -Infinity, minC = Infinity, maxC = -Infinity;
+  for (const k of cells.keys()) {
+    const [r, c] = k.split(",").map(Number);
+    if (r < minR) minR = r; if (r > maxR) maxR = r; if (c < minC) minC = c; if (c > maxC) maxC = c;
+  }
+  return { minR, maxR, minC, maxC };
+}
+// 回傳交叉格數；不能放就回傳 -1（0 表示合法但沒有交叉）
+function evaluatePlacement(cells, text, r, c, dir) {
+  const dr = dir === "V" ? 1 : 0, dc = dir === "H" ? 1 : 0;
+  const at = (rr, cc) => cells.get(keyOf(rr, cc));
+  if (at(r - dr, c - dc) || at(r + dr * text.length, c + dc * text.length)) return -1;
+  let cross = 0;
+  for (let i = 0; i < text.length; i++) {
+    const rr = r + dr * i, cc = c + dc * i, cell = at(rr, cc);
+    if (cell) {
+      if (cell.ch !== text[i]) return -1;
+      if (dir === "H" ? cell.h : cell.v) return -1;
+      cross++;
+    } else if (at(rr + dc, cc + dr) || at(rr - dc, cc - dr)) {
+      return -1; // 旁邊貼著別的字，會拼出不存在的詞
+    }
+  }
+  return cross;
+}
+function tryLayout(order, jitter) {
+  const cells = new Map();
+  const placed = [];
+  const put = (text, r, c, dir) => {
+    for (let i = 0; i < text.length; i++) {
+      const k = keyOf(dir === "V" ? r + i : r, dir === "H" ? c + i : c);
+      const cell = cells.get(k) || { ch: text[i], h: false, v: false };
+      cell[dir === "H" ? "h" : "v"] = true;
+      cells.set(k, cell);
+    }
+    placed.push({ text, row: r, col: c, dir });
+  };
+  put(order[0], 0, 0, "H");
+  const remaining = order.slice(1);
+  let islands = 0;
+  while (remaining.length) {
+    const b = bboxOf(cells);
+    const area = (b.maxR - b.minR + 1) * (b.maxC - b.minC + 1);
+    let best = null;
+    for (const text of remaining) {
+      for (const p of placed) {
+        const dir = p.dir === "H" ? "V" : "H";
+        for (let i = 0; i < p.text.length; i++) {
+          const pr = p.dir === "H" ? p.row : p.row + i, pc = p.dir === "H" ? p.col + i : p.col;
+          for (let j = 0; j < text.length; j++) {
+            if (text[j] !== p.text[i]) continue;
+            const r = dir === "V" ? pr - j : pr, c = dir === "H" ? pc - j : pc;
+            const x = evaluatePlacement(cells, text, r, c, dir);
+            if (x <= 0) continue;
+            const er = dir === "V" ? r + text.length - 1 : r, ec = dir === "H" ? c + text.length - 1 : c;
+            const nh = Math.max(b.maxR, er) - Math.min(b.minR, r) + 1;
+            const nw = Math.max(b.maxC, ec) - Math.min(b.minC, c) + 1;
+            const s = -x * 12 + (nh * nw - area) * 0.5 + Math.max(0, nh - nw) * 3 + (jitter ? Math.random() * 4 : 0);
+            if (!best || s < best.s) best = { text, r, c, dir, s };
+          }
+        }
+      }
+    }
+    if (best) {
+      put(best.text, best.r, best.c, best.dir);
+      remaining.splice(remaining.indexOf(best.text), 1);
+    } else {
+      // 和誰都接不上：放在下方空白處
+      const text = remaining.shift();
+      put(text, b.maxR + 2, b.minC, "H");
+      islands++;
+    }
+  }
+  const b = bboxOf(cells);
+  const h = b.maxR - b.minR + 1, w = b.maxC - b.minC + 1;
+  const score = islands * 1000 + w * h + Math.max(0, h - w) * 6 + Math.max(0, w - 2.2 * h) * 4;
+  return { placed, score, b, islands };
+}
+function layoutWords(texts) {
+  let best = null;
+  for (let a = 0; a < 120; a++) {
+    const order = a === 0 ? texts.slice() : shuffle(texts.slice());
+    const res = tryLayout(order, a > 0);
+    if (!best || res.score < best.score) best = res;
+  }
+  const { b } = best;
+  return {
+    rows: b.maxR - b.minR + 1,
+    cols: b.maxC - b.minC + 1,
+    islands: best.islands,
+    words: best.placed.map((p) => ({ text: p.text, row: p.row - b.minR, col: p.col - b.minC, dir: p.dir }))
+  };
+}
+
+/* =========================================================
+   7. 關卡狀態與遊戲流程
+   ========================================================= */
+let run = null;          // 目前這一局的所有狀態（可被熱更新保存）
+let timerId = null;
+
+function wordCells(w) {
+  const list = [];
+  for (let i = 0; i < w.text.length; i++) list.push(keyOf(w.dir === "V" ? w.row + i : w.row, w.dir === "H" ? w.col + i : w.col));
+  return list;
+}
+const cellAt = (r, c) => run.cells[keyOf(r, c)];
+const isOpen = (cell) => cell && !cell.given && !cell.filled;
+const activeWord = () => run.words.find((w) => w.id === run.activeId) || null;
+
+function startLevel(level) {
+  closeModal("modal-victory");
+  const lay = layoutWords(level.idioms);
+  const words = lay.words.map((w, i) => ({ ...w, id: i, solved: false }));
+  // 依閱讀順序排：由上而下、由左而右
+  words.sort((a, b) => a.row - b.row || a.col - b.col);
+  words.forEach((w, i) => { w.id = i; });
+  const cells = {};
+  words.forEach((w) => {
+    wordCells(w).forEach((k, i) => {
+      const [r, c] = k.split(",").map(Number);
+      if (!cells[k]) cells[k] = { r, c, char: w.text[i], given: false, filled: false, words: [] };
+      cells[k].words.push(w.id);
+    });
+  });
+  // 每句先給一個字：挑不在交叉點的格子
+  shuffle(words.slice()).forEach((w) => {
+    const keys = wordCells(w);
+    if (keys.some((k) => cells[k].given)) return;
+    const singles = keys.filter((k) => cells[k].words.length === 1);
+    const pool = singles.length ? singles : keys;
+    cells[pool[Math.floor(Math.random() * pool.length)]].given = true;
+  });
+  // 字盤：所有空格的正確字＋進階模式的干擾字
+  const tiles = [];
+  Object.values(cells).forEach((cell) => { if (!cell.given) tiles.push(cell.char); });
+  if (store.mode === "advanced") {
+    const used = new Set(Object.values(cells).map((c) => c.char));
+    shuffle(DISTRACTORS.filter((ch) => !used.has(ch))).slice(0, 3).forEach((ch) => tiles.push(ch));
+  }
+  run = {
+    level, rows: lay.rows, cols: lay.cols, islands: lay.islands, words, cells,
+    tiles: shuffle(tiles).map((ch, i) => ({ id: i, char: ch, used: false })),
+    sel: null, activeId: 0, hearts: 3, hints: 3, seconds: 0, done: false, hint: null
+  };
+  selectWord(0);
+  showScreen("game");
+  renderGame();
+  startTimer();
+}
+
+function firstOpenIn(word, afterKey) {
+  const keys = wordCells(word);
+  let start = 0;
+  if (afterKey) { const idx = keys.indexOf(afterKey); if (idx >= 0) start = idx + 1; }
+  for (let n = 0; n < keys.length; n++) {
+    const k = keys[(start + n) % keys.length];
+    if (isOpen(run.cells[k])) return run.cells[k];
+  }
+  return null;
+}
+function selectWord(id) {
+  const w = run.words.find((x) => x.id === id);
+  if (!w) return;
+  run.activeId = id;
+  const open = firstOpenIn(w);
+  const target = open || run.cells[wordCells(w)[0]];
+  run.sel = { r: target.r, c: target.c };
+}
+function pickWordForCell(cell, preferDir) {
+  const ids = cell.words;
+  if (ids.length === 1) return ids[0];
+  const ws = ids.map((id) => run.words.find((w) => w.id === id));
+  const unsolved = ws.filter((w) => !w.solved);
+  const pool = unsolved.length ? unsolved : ws;
+  return (pool.find((w) => w.dir === preferDir) || pool[0]).id;
+}
+function onCellClick(r, c) {
+  if (!run) return;
+  const cell = cellAt(r, c);
+  if (!cell) return;
+  const same = run.sel && run.sel.r === r && run.sel.c === c;
+  run.sel = { r, c };
+  if (same && cell.words.length > 1) {
+    run.activeId = cell.words.find((id) => id !== run.activeId) ?? cell.words[0];
+  } else if (!cell.words.includes(run.activeId)) {
+    const cur = activeWord();
+    run.activeId = pickWordForCell(cell, cur ? cur.dir : "H");
+  }
+  run.hint = null;
+  tone("tap");
+  renderGrid(); renderInfo(); renderChips(); renderDir();
+}
+// 要填的格子：選到的空格；若選到已填好的格子，就找這句的下一個空格
+function currentTarget() {
+  if (!run.sel) return null;
+  const cell = cellAt(run.sel.r, run.sel.c);
+  if (isOpen(cell)) return cell;
+  const w = activeWord();
+  if (!w) return null;
+  const open = firstOpenIn(w, keyOf(run.sel.r, run.sel.c));
+  if (open) run.sel = { r: open.r, c: open.c };
+  return open;
+}
+function onTileClick(tileId) {
+  if (!run || run.done) return;
+  const tile = run.tiles.find((t) => t.id === tileId);
+  if (!tile || tile.used) return;
+  const target = currentTarget();
+  if (!target) { toast("先點一個空白格子，再選字"); return; }
+  if (tile.char === target.char) {
+    fillCell(target, tile);
+  } else {
+    run.hearts = Math.max(0, run.hearts - 1);
+    tone("wrong");
+    renderStatus();
+    const tEl = document.querySelector(`.tile[data-id="${tileId}"]`);
+    const cEl = document.querySelector(`.cell[data-k="${keyOf(target.r, target.c)}"]`);
+    [tEl, cEl].forEach((el) => { if (el) { el.classList.remove("wrong"); void el.offsetWidth; el.classList.add("wrong"); } });
+    const h = $("g-hearts"); h.classList.remove("hit"); void h.offsetWidth; h.classList.add("hit");
+    if (run.hearts === 0) toast("愛心用完了，可以繼續完成，這關會拿 1 顆星");
+    else toast(`「${tile.char}」不是這一格的字，再想想看`);
+  }
+}
+function fillCell(cell, tile) {
+  if (!cell.words.includes(run.activeId)) {
+    const cur = activeWord();
+    run.activeId = pickWordForCell(cell, cur ? cur.dir : "H");
+  }
+  tile.used = true;
+  cell.filled = true;
+  const k = keyOf(cell.r, cell.c);
+  const newly = [];
+  run.words.forEach((w) => {
+    if (!w.solved && wordCells(w).every((kk) => !isOpen(run.cells[kk]))) { w.solved = true; newly.push(w); }
+  });
+  const allDone = run.words.every((w) => w.solved);
+  if (newly.length) {
+    tone("word");
+    const say = newly.find((w) => w.id === run.activeId) || newly[0];
+    run.activeId = say.id;
+    setTimeout(() => speak(say.text, "zh-TW"), 250);
+  } else {
+    tone("correct");
+  }
+  // 往下一個空格移動
+  if (!allDone) {
+    const w = activeWord();
+    const next = w && !w.solved ? firstOpenIn(w, k) : null;
+    if (next) run.sel = { r: next.r, c: next.c };
+    else if (!newly.length) {
+      const nw = nextUnsolvedWord(run.activeId);
+      if (nw) selectWord(nw.id);
+    } else {
+      // 剛完成一句：選取留在完成的那句，讓學生看完整解說；游標移到下一句的空格
+      const nw = nextUnsolvedWord(run.activeId);
+      if (nw) { const open = firstOpenIn(nw); if (open) run.sel = { r: open.r, c: open.c }; }
+    }
+  }
+  renderGame();
+  const popKeys = new Set([k]);
+  newly.forEach((w) => wordCells(w).forEach((kk) => popKeys.add(kk)));
+  popKeys.forEach((kk) => { const el = document.querySelector(`.cell[data-k="${kk}"]`); if (el) el.classList.add("pop"); });
+  if (allDone) victory();
+}
+function nextUnsolvedWord(fromId) {
+  const n = run.words.length;
+  for (let i = 1; i <= n; i++) {
+    const w = run.words.find((x) => x.id === (fromId + i) % n);
+    if (w && !w.solved) return w;
+  }
+  return null;
+}
+function useHint() {
+  if (!run || run.done) return;
+  if (run.hints <= 0) { toast("這關的提示用完了"); return; }
+  let target = currentTarget();
+  if (!target) {
+    const w = nextUnsolvedWord(run.activeId) || run.words.find((x) => !x.solved);
+    if (!w) return;
+    selectWord(w.id);
+    target = currentTarget();
+  }
+  if (!target) return;
+  const tile = run.tiles.find((t) => !t.used && t.char === target.char);
+  if (!tile) return;
+  run.hints--;
+  const w = activeWord();
+  const info = w ? getInfo(w.text) : null;
+  run.hint = { char: target.char, meaning: info ? info.meaning : "" };
+  fillCell(target, tile);
+}
+function moveSel(dr, dc) {
+  if (!run || !run.sel) return;
+  let r = run.sel.r + dr, c = run.sel.c + dc;
+  while (r >= 0 && r < run.rows && c >= 0 && c < run.cols) {
+    const cell = cellAt(r, c);
+    if (cell) {
+      run.sel = { r, c };
+      const want = dc !== 0 ? "H" : "V";
+      const cur = activeWord();
+      if (!cell.words.includes(run.activeId) || !cur || cur.dir !== want) {
+        const match = cell.words.find((id) => run.words.find((w) => w.id === id).dir === want);
+        run.activeId = match ?? pickWordForCell(cell, want);
+      }
+      tone("tap");
+      renderGrid(); renderInfo(); renderChips(); renderDir();
+      return;
+    }
+    r += dr; c += dc;
+  }
+}
+
+/* ---------- 計時 ---------- */
+function startTimer() {
+  stopTimer();
+  $("g-timer").textContent = fmtTime(run.seconds);
+  timerId = setInterval(() => {
+    if (!run || run.done) return stopTimer();
+    run.seconds++;
+    $("g-timer").textContent = fmtTime(run.seconds);
+  }, 1000);
+}
+function stopTimer() { if (timerId) { clearInterval(timerId); timerId = null; } }
+
+/* ---------- 過關 ---------- */
+function victory() {
+  run.done = true;
+  stopTimer();
+  const stars = run.hearts >= 3 ? 3 : run.hearts === 2 ? 2 : 1;
+  const coins = stars * 10;
+  store.coins += coins;
+  const id = run.level.id;
+  const prev = store.progress[id] || { stars: 0, bestTime: null };
+  store.progress[id] = {
+    stars: Math.max(prev.stars || 0, stars),
+    bestTime: prev.bestTime == null ? run.seconds : Math.min(prev.bestTime, run.seconds)
+  };
+  saveStore();
+  run.result = { stars, coins };
+  setTimeout(() => { tone("victory"); openVictory(); }, 700);
+}
+function openVictory() {
+  if (!run || !run.result) return;
+  const { stars, coins } = run.result;
+  $("v-stars").innerHTML = starsHtml(stars);
+  $("v-title").textContent = stars === 3 ? "滿分過關！" : "過關了！";
+  $("v-time").textContent = fmtTime(run.seconds);
+  $("v-hearts").textContent = run.hearts;
+  $("v-coins").textContent = "+" + coins;
+  renderReviewList();
+  const idx = LEVELS.findIndex((l) => l.id === run.level.id);
+  $("v-next").hidden = !(idx >= 0 && idx < LEVELS.length - 1);
+  openModal("modal-victory");
+}
+function renderReviewList() {
+  const list = $("v-list");
+  list.innerHTML = "";
+  run.words.forEach((w) => {
+    const info = getInfo(w.text);
+    const en = firstEnglish(info);
+    const div = document.createElement("div");
+    div.className = "review";
+    div.innerHTML = `
+      <div class="review-top">
+        <div><span class="review-word">${esc(w.text)}</span><span class="zhuyin">${esc(info?.zhuyin || "")}</span></div>
+        <div class="speak-group">
+          <button class="speak-btn" type="button" data-say="zh">朗讀國語</button>
+          ${store.bilingual && en ? `<button class="speak-btn en" type="button" data-say="en">朗讀英文</button>` : ""}
+        </div>
+      </div>
+      ${store.bilingual && info?.english ? `<div class="en">${esc(info.english)}</div>` : ""}
+      <p class="meaning"><b>釋義：</b>${esc(info ? info.meaning : "老師挑選的練習成語，試著用它造一個句子。")}</p>
+      ${info?.example ? `<div class="example"><p>${esc(info.example)}</p>${store.bilingual && info.exampleEn ? `<p class="en">${esc(info.exampleEn)}</p>` : ""}</div>` : ""}`;
+    div.querySelector('[data-say="zh"]').addEventListener("click", () => speak(w.text, "zh-TW"));
+    const enBtn = div.querySelector('[data-say="en"]');
+    if (enBtn) enBtn.addEventListener("click", () => speak(en, "en-US"));
+    list.appendChild(div);
+  });
+}
+
+/* =========================================================
+   8. 畫面繪製
+   ========================================================= */
+function showScreen(name) {
+  $("screen-lobby").hidden = name !== "lobby";
+  $("screen-game").hidden = name !== "game";
+  if (name === "lobby") { stopTimer(); renderLobby(); }
+  window.scrollTo(0, 0);
+}
+function goLobby() {
+  closeModal("modal-victory");
+  run = null;
+  showScreen("lobby");
+}
+
+function renderLobby() {
+  let earned = 0;
+  LEVELS.forEach((l) => { earned += store.progress[l.id]?.stars || 0; });
+  $("total-stars").textContent = earned;
+  $("max-stars").textContent = LEVELS.length * 3;
+  $("total-coins").textContent = store.coins;
+
+  const grid = $("level-grid");
+  grid.innerHTML = "";
+  LEVELS.forEach((l) => {
+    const p = store.progress[l.id];
+    const cleared = p && p.stars > 0;
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "level-card" + (cleared ? " cleared" : "");
+    card.innerHTML = `
+      <div class="level-top"><span class="level-seal">第${CN_NUM[l.number]}關</span><span class="level-grade">${esc(l.grade)}</span></div>
+      <h4>${esc(l.title)}</h4>
+      <p class="desc">${esc(l.desc)}</p>
+      <div class="level-foot">
+        ${starsHtml(p?.stars || 0)}
+        <span class="num">${cleared && p.bestTime != null ? "最快 " + fmtTime(p.bestTime) : l.idioms.length + " 句成語"}</span>
+      </div>`;
+    card.addEventListener("click", () => startLevel(l));
+    grid.appendChild(card);
+  });
+
+  const sec = $("custom-section"), cg = $("custom-grid");
+  sec.hidden = store.customLevels.length === 0;
+  cg.innerHTML = "";
+  store.customLevels.forEach((l) => {
+    const p = store.progress[l.id];
+    const card = document.createElement("div");
+    card.className = "level-card custom";
+    card.setAttribute("role", "button");
+    card.tabIndex = 0;
+    card.innerHTML = `
+      <div class="level-top"><span class="level-seal">老師出題</span><button class="link-btn" type="button" data-del>刪除</button></div>
+      <h4>${esc(l.title)}</h4>
+      <p class="desc">${esc(l.idioms.join("、"))}</p>
+      <div class="level-foot">${starsHtml(p?.stars || 0)}<span>${l.idioms.length} 句成語</span></div>`;
+    const play = () => startLevel(l);
+    card.addEventListener("click", play);
+    card.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); play(); } });
+    card.querySelector("[data-del]").addEventListener("click", (e) => {
+      e.stopPropagation();
+      armButton(e.currentTarget, "再點一次刪除", () => {
+        store.customLevels = store.customLevels.filter((x) => x.id !== l.id);
+        delete store.progress[l.id];
+        saveStore(); renderLobby(); toast("已刪除「" + l.title + "」");
+      });
+    });
+    cg.appendChild(card);
+  });
+}
+
+function renderGame() {
+  renderStatus(); renderGrid(); renderTiles(); renderInfo(); renderChips(); renderDir();
+}
+function renderStatus() {
+  const l = run.level;
+  const badge = $("g-badge");
+  if (l.number) { badge.textContent = `第 ${l.number} 關`; badge.classList.remove("custom"); }
+  else { badge.textContent = "老師出題"; badge.classList.add("custom"); }
+  $("g-title").textContent = l.title;
+  $("g-solved").textContent = run.words.filter((w) => w.solved).length;
+  $("g-total").textContent = run.words.length;
+  $("g-hints").textContent = run.hints;
+  $("btn-hint").disabled = run.hints <= 0 || run.done;
+  let h = "";
+  for (let i = 1; i <= 3; i++) h += `<span class="${i <= run.hearts ? "on" : "off"}">♥</span>`;
+  $("g-hearts").innerHTML = h;
+  $("btn-mode").textContent = store.mode === "advanced" ? "進階模式" : "基礎模式";
+  $("g-timer").textContent = fmtTime(run.seconds);
+}
+function fitCellSize() {
+  if (!run) return;
+  const scroller = $("grid-scroll");
+  const avail = scroller.clientWidth - 24 - 4;   // 扣掉格子容器的內距與邊框
+  const gap = 5;
+  const byWidth = Math.floor((avail - gap * (run.cols - 1)) / run.cols);
+  // 電腦版：讓格子和下方字盤盡量同時出現在一個畫面裡
+  const tray = document.querySelector(".tray");
+  const reserved = 300 + (tray ? tray.offsetHeight : 150);
+  const byHeight = Math.floor((window.innerHeight - reserved - gap * (run.rows - 1)) / run.rows);
+  const wide = window.innerWidth > 920;
+  const size = Math.max(28, Math.min(60, byWidth, wide ? Math.max(34, byHeight) : 60));
+  document.documentElement.style.setProperty("--cell", size + "px");
+}
+function renderGrid() {
+  const grid = $("cw-grid");
+  fitCellSize();
+  grid.style.gridTemplateColumns = `repeat(${run.cols}, var(--cell))`;
+  grid.style.gridTemplateRows = `repeat(${run.rows}, var(--cell))`;
+  grid.innerHTML = "";
+  const act = activeWord();
+  const actKeys = new Set(act ? wordCells(act) : []);
+  Object.entries(run.cells).forEach(([k, cell]) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.dataset.k = k;
+    b.style.gridRow = String(cell.r + 1);
+    b.style.gridColumn = String(cell.c + 1);
+    const cls = ["cell"];
+    if (cell.given) cls.push("given");
+    else if (cell.filled) cls.push("filled");
+    else cls.push("blank");
+    if (actKeys.has(k)) cls.push("in-word");
+    if (cell.words.some((id) => run.words.find((w) => w.id === id).solved)) cls.push("done");
+    if (run.sel && run.sel.r === cell.r && run.sel.c === cell.c) cls.push("sel");
+    b.className = cls.join(" ");
+    b.textContent = cell.given || cell.filled ? cell.char : "";
+    b.setAttribute("aria-label", cell.given || cell.filled ? `已填：${cell.char}` : "空格");
+    b.addEventListener("click", () => onCellClick(cell.r, cell.c));
+    grid.appendChild(b);
+  });
+}
+function renderTiles() {
+  const box = $("tiles");
+  box.innerHTML = "";
+  run.tiles.forEach((t) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "tile";
+    b.dataset.id = t.id;
+    b.textContent = t.char;
+    b.disabled = t.used || run.done;
+    b.addEventListener("click", () => onTileClick(t.id));
+    box.appendChild(b);
+  });
+  const left = run.tiles.filter((t) => !t.used).length;
+  $("g-tray-sub").textContent = run.done ? "全部完成！" : `剩 ${left} 個字${store.mode === "advanced" ? "（含 3 個干擾字）" : ""}・點字就會填進框起來的格子`;
+}
+function renderDir() {
+  const w = activeWord();
+  const el = $("g-dir");
+  if (!w) { el.textContent = "點一個空格開始"; return; }
+  const idx = run.words.indexOf(w) + 1;
+  el.textContent = `${w.dir === "H" ? "橫向" : "直向"}・第 ${idx} 句${w.solved ? "（已完成）" : ""}`;
+}
+function renderInfo() {
+  const body = $("info-body");
+  const sg = $("speak-group");
+  const hintBox = $("hint-box");
+  const w = activeWord();
+  if (run.hint) {
+    hintBox.hidden = false;
+    hintBox.innerHTML = `<b>小老師提示：</b>已經幫你填入「${esc(run.hint.char)}」。${run.hint.meaning ? "這句的意思是：" + esc(run.hint.meaning) : ""}`;
+  } else hintBox.hidden = true;
+  if (!w) { sg.hidden = true; body.innerHTML = ""; return; }
+  const info = getInfo(w.text);
+  const showEn = store.bilingual;
+  if (w.solved) {
+    sg.hidden = false;
+    $("speak-en").hidden = !(showEn && info?.english);
+    body.innerHTML = `
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="word-plate solved">
+          <div class="zhuyin">${esc(info?.zhuyin || "老師挑選的成語")}</div>
+          <div class="big-word">${esc(w.text)}</div>
+          ${showEn && info?.english ? `<div class="en-line">${esc(info.english)}</div>` : ""}
+        </div>
+        <div class="field"><span><span class="tag tag-wood">釋義</span></span><p>${esc(info ? info.meaning : "這是老師挑選的練習成語，試著用它造一個句子吧！")}</p></div>
+        <div class="field"><span><span class="tag tag-gold">${showEn ? "中英例句" : "例句"}</span></span>
+          <div class="example"><p>${esc(info?.example || `試著用「${w.text}」造一個完整的句子。`)}</p>${showEn && info?.exampleEn ? `<p class="en">${esc(info.exampleEn)}</p>` : ""}</div>
+        </div>
+      </div>`;
+  } else {
+    sg.hidden = true;
+    const masks = wordCells(w).map((k) => {
+      const c = run.cells[k];
+      return c.given || c.filled ? `<span>${esc(c.char)}</span>` : `<span class="q">？</span>`;
+    }).join("");
+    body.innerHTML = `
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="word-plate">
+          <div class="label">${w.dir === "H" ? "橫向" : "直向"}這一句・完成後解鎖注音、例句和朗讀</div>
+          <div class="mask">${masks}</div>
+        </div>
+        <div class="clue">
+          <span><span class="tag tag-celadon">意思線索</span></span>
+          <p>${esc(info ? info.meaning : "看看交叉格裡已經有的字，從字盤找出正確的組合。")}</p>
+          ${showEn && info?.english ? `<div class="en-clue">English clue：<i>${esc(info.english)}</i></div>` : ""}
+        </div>
+      </div>`;
+  }
+}
+function renderChips() {
+  const box = $("chips");
+  box.innerHTML = "";
+  run.words.forEach((w) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip" + (w.solved ? " solved" : "") + (w.id === run.activeId ? " active" : "");
+    b.innerHTML = w.solved
+      ? `<span class="mark">✓</span>${esc(w.text)}`
+      : `<span class="mark">${w.dir === "H" ? "橫" : "直"}</span>${"？".repeat(w.text.length)}`;
+    b.addEventListener("click", () => {
+      selectWord(w.id);
+      run.hint = null;
+      if (w.solved) speak(w.text, "zh-TW");
+      renderGrid(); renderInfo(); renderChips(); renderDir();
+    });
+    box.appendChild(b);
+  });
+}
+
+/* =========================================================
+   9. 彈窗與老師出題
+   ========================================================= */
+function openModal(id) { const m = $(id); m.hidden = false; const card = m.querySelector(".modal-card"); card.classList.remove("pop-in"); void card.offsetWidth; card.classList.add("pop-in"); }
+function closeModal(id) { $(id).hidden = true; }
+function anyModalOpen() { return !$("modal-victory").hidden || !$("modal-teacher").hidden; }
+
+function openTeacher() { $("t-msg").hidden = true; openModal("modal-teacher"); setTimeout(() => $("t-input").focus(), 50); }
+function teacherError(msg) { const m = $("t-msg"); m.textContent = msg; m.hidden = false; }
+function createCustomLevel() {
+  const name = $("t-name").value.trim() || "老師出的成語練習";
+  const raw = $("t-input").value;
+  const lines = raw.split(/\n+/).map((s) => s.trim()).filter(Boolean);
+  const idioms = [];
+  const seen = new Set();
+  const newDict = {};
+  const rejected = [];
+  const addWord = (word, parts) => {
+    const clean = word.replace(/[^㐀-鿿]/g, "");
+    if (seen.has(clean)) return;
+    if (clean.length < 3 || clean.length > 6) { rejected.push(word); return; }
+    seen.add(clean);
+    idioms.push(clean);
+    if (parts && parts.length > 1) {
+      const base = DICT[clean] || {};
+      newDict[clean] = {
+        zhuyin: base.zhuyin || "",
+        english: parts[1] || base.english || "",
+        meaning: parts[2] || base.meaning || "老師挑選的練習成語。",
+        example: base.example || `試著用「${clean}」造一個完整的句子。`,
+        exampleEn: base.exampleEn || ""
+      };
+    }
+  };
+  lines.forEach((line) => {
+    if (/[|｜]/.test(line)) {
+      const parts = line.split(/[|｜]/).map((p) => p.trim());
+      addWord(parts[0], parts);
+    } else {
+      line.split(/[\s,，、;；。]+/).filter(Boolean).forEach((wd) => addWord(wd, null));
+    }
+  });
+  if (idioms.length < 2) { teacherError("至少要輸入 2 句成語（每句 3 到 6 個字），才排得成格子。"); return; }
+  if (idioms.length > 8) { teacherError(`一關最多 8 句，現在有 ${idioms.length} 句。請刪掉一些，或分成兩關。`); return; }
+  Object.assign(store.customDict, newDict);
+  const level = { id: "custom_" + Date.now(), title: name, idioms };
+  store.customLevels.unshift(level);
+  saveStore();
+  closeModal("modal-teacher");
+  startLevel(level);
+  const notes = [];
+  if (rejected.length) notes.push(`略過了：${rejected.join("、")}`);
+  if (run.islands > 0) notes.push(`有 ${run.islands} 句和其他成語沒有共同字，放在旁邊`);
+  toast(notes.length ? notes.join("；") : "格子排好了，開始玩吧！");
+}
+
+/* =========================================================
+   10. 設定按鈕與事件綁定
+   ========================================================= */
+function applySettings() {
+  $("btn-bilingual").setAttribute("aria-pressed", String(store.bilingual));
+  $("btn-sound").setAttribute("aria-pressed", String(store.sound));
+}
+$("brand").addEventListener("click", goLobby);
+$("btn-lobby").addEventListener("click", goLobby);
+$("btn-teacher").addEventListener("click", openTeacher);
+$("btn-bilingual").addEventListener("click", () => {
+  store.bilingual = !store.bilingual; saveStore(); applySettings();
+  toast(store.bilingual ? "已開啟英文雙語：線索和例句會附上英文" : "已關閉英文：只顯示中文");
+  if (run) { renderInfo(); if (!$("modal-victory").hidden) renderReviewList(); }
+});
+$("btn-sound").addEventListener("click", () => {
+  store.sound = !store.sound; saveStore(); applySettings();
+  if (!store.sound && "speechSynthesis" in window) window.speechSynthesis.cancel();
+  toast(store.sound ? "已開啟音效和朗讀" : "已關閉聲音");
+});
+$("btn-mode").addEventListener("click", () => {
+  store.mode = store.mode === "advanced" ? "basic" : "advanced"; saveStore();
+  startLevel(run.level);
+  toast(store.mode === "advanced" ? "進階模式：字盤多了 3 個干擾字，本關重新開始" : "基礎模式：字盤沒有干擾字，本關重新開始");
+});
+$("btn-restart").addEventListener("click", (e) => armButton(e.currentTarget, "再點一次重來", () => startLevel(run.level)));
+$("btn-hint").addEventListener("click", useHint);
+$("btn-reset").addEventListener("click", (e) => armButton(e.currentTarget, "再點一次確定重設", () => {
+  store.progress = {}; store.coins = 0; saveStore(); renderLobby(); toast("已重設所有星星和金幣");
+}));
+$("speak-zh").addEventListener("click", () => { const w = activeWord(); if (w) speak(w.text, "zh-TW"); });
+$("speak-en").addEventListener("click", () => { const w = activeWord(); if (w) speak(firstEnglish(getInfo(w.text)), "en-US"); });
+$("v-lobby").addEventListener("click", goLobby);
+$("v-replay").addEventListener("click", () => startLevel(run.level));
+$("v-next").addEventListener("click", () => {
+  const idx = LEVELS.findIndex((l) => l.id === run.level.id);
+  if (idx >= 0 && idx < LEVELS.length - 1) startLevel(LEVELS[idx + 1]); else goLobby();
+});
+$("t-close").addEventListener("click", () => closeModal("modal-teacher"));
+$("t-cancel").addEventListener("click", () => closeModal("modal-teacher"));
+$("t-create").addEventListener("click", createCustomLevel);
+$("t-sample").addEventListener("click", () => {
+  $("t-name").value = "本週成語練習";
+  $("t-input").value = "一舉兩得 | Kill two birds with one stone | 做一件事同時得到兩種好處。\n得心應手\n手忙腳亂\n亡羊補牢\n牢不可破\n破釜沉舟";
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") { if (!$("modal-teacher").hidden) closeModal("modal-teacher"); return; }
+  if (!run || $("screen-game").hidden || anyModalOpen()) return;
+  const tgt = e.target instanceof Element ? e.target : null;
+  if (tgt && tgt.closest("input, textarea")) return;
+  const moves = { ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1] };
+  if (moves[e.key]) { e.preventDefault(); moveSel(...moves[e.key]); return; }
+  if (e.key === " " && run.sel && !(tgt && tgt.closest(".tile, .btn, .bar-btn, .chip, .speak-btn"))) {
+    e.preventDefault();
+    onCellClick(run.sel.r, run.sel.c);
+  }
+});
+let resizeTimer = null;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => { if (run && !$("screen-game").hidden) fitCellSize(); }, 120);
+});
+if ("speechSynthesis" in window) { try { window.speechSynthesis.getVoices(); } catch (e) {} }
+
+/* =========================================================
+   11. 啟動（頁面更新時保留正在玩的那一局）
+   ========================================================= */
+function boot(data) {
+  loadStore();
+  applySettings();
+  if (data && data.run && data.run.level) {
+    run = data.run;
+    showScreen("game");
+    renderGame();
+    if (run.done) openVictory(); else startTimer();
+  } else {
+    showScreen("lobby");
+  }
+}
+window.claude?.hot?.snapshot?.(() => ({ run }));
+window.claude?.hot?.ready ? window.claude.hot.ready(boot) : boot(window.claude?.hot?.data ?? {});
+</script>
+
+</html>
